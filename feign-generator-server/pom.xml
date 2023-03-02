@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>com.github.iminifly</groupId>
+		<groupId>io.github.iminifly</groupId>
 		<artifactId>feign-generator</artifactId>
 		<version>0.1</version>
 	</parent>
@@ -38,7 +38,7 @@
 		</dependency>
 		<!-- feign-generator-core -->
 		<dependency>
-			<groupId>com.github.iminifly</groupId>
+			<groupId>io.github.iminifly</groupId>
 			<artifactId>feign-generator-core</artifactId>
 			<version>${feign-generator.version}</version>
 		</dependency>

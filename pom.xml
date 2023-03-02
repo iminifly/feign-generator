@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.iminifly</groupId>
+	<groupId>io.github.iminifly</groupId>
 	<artifactId>feign-generator</artifactId>
 	<version>0.1</version>
 	<packaging>pom</packaging>
