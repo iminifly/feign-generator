@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.net5ijy.cloud.plugin.feign.server.mapper.FeignModelMapper">
+  <resultMap id="FeignModelEntityMap"
+    type="org.net5ijy.cloud.plugin.feign.server.entity.FeignModelEntity">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="project_id" jdbcType="INTEGER" property="projectId"/>
+    <result column="package_name" jdbcType="VARCHAR" property="packageName"/>
+    <result column="model_name" jdbcType="VARCHAR" property="modelName"/>
+    <result column="model_class_content" jdbcType="LONGVARCHAR" property="modelClassContent"/>
+    <result column="size" jdbcType="BIGINT" property="size"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="org.net5ijy.cloud.plugin.feign.server.entity.FeignModelEntity">
+    insert into `feign_model`
+    (`project_id`, `package_name`, `model_name`, `model_class_content`, `size`, `create_time`, `update_time`)
+    values
+      (
+        #{projectId,jdbcType=INTEGER},
+        #{packageName,jdbcType=VARCHAR},
+        #{modelName,jdbcType=VARCHAR},
+        #{modelClassContent,jdbcType=LONGVARCHAR},
+        #{size,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into `feign_model`
+    (
+    `project_id`,
+    `package_name`,
+    `model_name`,
+    `model_class_content`,
+    `size`,
+    `create_time`,
+    `update_time`
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.projectId,jdbcType=INTEGER},
+      #{item.packageName,jdbcType=VARCHAR},
+      #{item.modelName,jdbcType=VARCHAR},
+      #{item.modelClassContent,jdbcType=LONGVARCHAR},
+      #{item.size,jdbcType=BIGINT},
+      #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.updateTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+
+  <select id="selectById" resultMap="FeignModelEntityMap">
+    select *
+    from `feign_model`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByProjectId">
+    delete from `feign_model`
+    where `project_id` = #{projectId,jdbcType=INTEGER}
+  </delete>
+
+  <select id="countByProjectId" resultType="java.lang.Integer">
+    select
+    count(*)
+    from `feign_model`
+    <where>
+      <if test="projectId != null">
+        `project_id` = #{projectId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByProjectIdAndPage" resultMap="FeignModelEntityMap">
+    select
+    `id`,
+    `project_id`,
+    `package_name`,
+    `model_name`,
+    `size`,
+    `create_time`,
+    `update_time`
+    from `feign_model`
+    <where>
+      <if test="projectId != null">
+        `project_id` = #{projectId,jdbcType=INTEGER}
+      </if>
+    </where>
+    limit #{start}, #{size}
+  </select>
+</mapper>

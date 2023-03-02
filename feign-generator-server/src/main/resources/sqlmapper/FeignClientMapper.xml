@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.net5ijy.cloud.plugin.feign.server.mapper.FeignClientMapper">
+  <resultMap id="FeignClientEntityMap"
+    type="org.net5ijy.cloud.plugin.feign.server.entity.FeignClientEntity">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="project_id" jdbcType="INTEGER" property="projectId"/>
+    <result column="feign_class_name" jdbcType="VARCHAR" property="feignClassName"/>
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="fallback_factory_name" jdbcType="VARCHAR" property="fallbackFactoryName"/>
+    <result column="fallback_factory_content" jdbcType="LONGVARCHAR"
+      property="fallbackFactoryContent"/>
+    <result column="feign_class_content" jdbcType="LONGVARCHAR" property="feignClassContent"/>
+    <result column="size" jdbcType="BIGINT" property="size"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="org.net5ijy.cloud.plugin.feign.server.entity.FeignClientEntity">
+    insert into `feign_client`
+    (
+      `project_id`,
+      `feign_class_name`,
+      `url`,
+      `fallback_factory_name`,
+      `fallback_factory_content`,
+      `feign_class_content`,
+      `size`,
+      `create_time`,
+      `update_time`
+    )
+    values
+      (
+        #{projectId,jdbcType=INTEGER},
+        #{feignClassName,jdbcType=VARCHAR},
+        #{url,jdbcType=VARCHAR},
+        #{fallbackFactoryName,jdbcType=VARCHAR},
+        #{fallbackFactoryContent,jdbcType=LONGVARCHAR},
+        #{feignClassContent,jdbcType=LONGVARCHAR},
+        #{size,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into `feign_client`
+    (
+    `project_id`,
+    `feign_class_name`,
+    `url`,
+    `fallback_factory_name`,
+    `fallback_factory_content`,
+    `feign_class_content`,
+    `size`,
+    `create_time`,
+    `update_time`
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.projectId,jdbcType=INTEGER},
+      #{item.feignClassName,jdbcType=VARCHAR},
+      #{item.url,jdbcType=VARCHAR},
+      #{item.fallbackFactoryName,jdbcType=VARCHAR},
+      #{item.fallbackFactoryContent,jdbcType=LONGVARCHAR},
+      #{item.feignClassContent,jdbcType=LONGVARCHAR},
+      #{item.size,jdbcType=BIGINT},
+      #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.updateTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+
+  <select id="selectById" resultMap="FeignClientEntityMap">
+    select *
+    from `feign_client`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByProjectId">
+    delete from `feign_client`
+    where `project_id` = #{projectId,jdbcType=INTEGER}
+  </delete>
+
+  <select id="countByProjectId" resultType="java.lang.Integer">
+    select
+    count(*)
+    from `feign_client`
+    <where>
+      <if test="projectId != null">
+        `project_id` = #{projectId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByProjectIdAndPage" resultMap="FeignClientEntityMap">
+    select
+    `id`,
+    `project_id`,
+    `feign_class_name`,
+    `url`,
+    `fallback_factory_name`,
+    `size`,
+    `create_time`,
+    `update_time`
+    from `feign_client`
+    <where>
+      <if test="projectId != null">
+        `project_id` = #{projectId,jdbcType=INTEGER}
+      </if>
+    </where>
+    limit #{start}, #{size}
+  </select>
+</mapper>

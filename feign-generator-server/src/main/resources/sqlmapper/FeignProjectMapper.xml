@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.net5ijy.cloud.plugin.feign.server.mapper.FeignProjectMapper">
+  <resultMap id="FeignProjectEntityMap"
+    type="org.net5ijy.cloud.plugin.feign.server.entity.FeignProjectEntity">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
+    <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+    <result column="service_version" jdbcType="VARCHAR" property="serviceVersion"/>
+    <result column="description" jdbcType="VARCHAR" property="description"/>
+    <result column="feign_zip_file" jdbcType="BLOB" javaType="_byte[]" property="feignZipFile"
+      typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+    <result column="size" jdbcType="BIGINT" property="size"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="version" jdbcType="INTEGER" property="version"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="org.net5ijy.cloud.plugin.feign.server.entity.FeignProjectEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into `feign_project`
+    (`group_id`, `project_name`, `service_version`, `description`, `feign_zip_file`, `size`, `create_time`, `update_time`, `version`)
+    values
+      (
+        #{groupId,jdbcType=VARCHAR},
+        #{projectName,jdbcType=VARCHAR},
+        #{serviceVersion,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR},
+        #{feignZipFile,jdbcType=BLOB},
+        #{size,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{version,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <insert id="update" parameterType="org.net5ijy.cloud.plugin.feign.server.entity.FeignProjectEntity">
+    update `feign_project`
+    <set>
+      <if test="groupId != null and groupId != ''">
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null and projectName != ''">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceVersion != null and serviceVersion != ''">
+        service_version = #{serviceVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null and description != ''">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="feignZipFile != null">
+        feign_zip_file = #{feignZipFile,jdbcType=BLOB},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = version + 1,
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and version = #{version,jdbcType=INTEGER}
+  </insert>
+
+  <select id="selectById" resultMap="FeignProjectEntityMap">
+    select *
+    from `feign_project`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByGroupAndName" resultMap="FeignProjectEntityMap">
+    select *
+    from `feign_project`
+    where
+      `project_name` = #{projectName,jdbcType=VARCHAR} and `group_id` = #{groupId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="FeignProjectEntityMap">
+    select
+      `id`,
+      `group_id`,
+      `project_name`
+    from `feign_project`
+  </select>
+
+  <select id="countByGroupAndNameLike" resultType="java.lang.Integer">
+    select
+    count(*)
+    from `feign_project`
+    <where>
+      <if test="groupId != null and groupId != ''">
+        group_id like CONCAT ('%',#{groupId},'%')
+      </if>
+      <if test="projectName != null and projectName != ''">
+        and project_name like CONCAT ('%',#{projectName},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByGroupAndNameLikeAndPage" resultMap="FeignProjectEntityMap">
+    select
+    `id`,
+    `group_id`,
+    `project_name`,
+    `service_version`,
+    `description`,
+    `size`,
+    `create_time`,
+    `update_time`
+    from `feign_project`
+    <where>
+      <if test="groupId != null and groupId != ''">
+        group_id like CONCAT ('%',#{groupId},'%')
+      </if>
+      <if test="projectName != null and projectName != ''">
+        and project_name like CONCAT ('%',#{projectName},'%')
+      </if>
+    </where>
+    limit #{start}, #{size}
+  </select>
+</mapper>

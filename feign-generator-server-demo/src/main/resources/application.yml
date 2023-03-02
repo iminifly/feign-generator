@@ -1,0 +1,55 @@
+server:
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 100
+    accept-count: 100
+    max-connections: 1000
+    uri-encoding: UTF-8
+#    max-http-post-size: 4096
+    max-http-form-post-size: 4096
+  servlet:
+    context-path: /
+  port: 30000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql-dba-1:3306/feign?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
+    username: system
+    password: ******
+    druid:
+      filters: stat
+      maxActive: 5
+      initialSize: 5
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 5
+  mvc:
+    servlet:
+      load-on-startup: 0
+    static-path-pattern: /static/**
+  resources:
+    static-locations: classpath:/static/
+  freemarker:
+    suffix: .html
+    charset: UTF-8
+    content-type: text/html; charset=utf-8
+    template-loader-path: classpath:/templates
+    enabled: true
+
+mybatis:
+  mapper-locations: classpath*:/sqlmapper/*Mapper.xml
+
+logging:
+  level:
+    root: info
