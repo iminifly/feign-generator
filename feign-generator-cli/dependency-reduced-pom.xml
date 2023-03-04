@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>feign-generator</artifactId>
-    <groupId>org.net5ijy.cloud</groupId>
-    <version>1.0.1</version>
+    <groupId>io.github.iminifly</groupId>
+    <version>0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>feign-generator-cli</artifactId>
@@ -61,8 +61,14 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>2.2.5.RELEASE</version>
+      <version>2.7.9</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.36</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
