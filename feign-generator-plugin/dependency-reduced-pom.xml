@@ -2,15 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>feign-generator</artifactId>
-    <groupId>org.net5ijy.cloud</groupId>
-    <version>1.0.1</version>
+    <groupId>io.github.iminifly</groupId>
+    <version>0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.net5ijy.cloud</groupId>
   <artifactId>feign-generator-plugin</artifactId>
   <packaging>maven-plugin</packaging>
   <name>feign-generator-plugin</name>
-  <version>1.0.1</version>
   <build>
     <defaultGoal>compile</defaultGoal>
     <finalName>${project.artifactId}</finalName>

@@ -12,6 +12,28 @@
 
 	<name>feign-generator</name>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>iminifly</name>
+			<email>iminifly@outlook.com</email>
+			<organization>https://github.com/iminifly/</organization>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://github.com/iminifly/feign-generator.git</connection>
+		<developerConnection>scm:git:https://github.com/iminifly/feign-generator.git</developerConnection>
+		<url>https://github.com/iminifly/feign-generator</url>
+	</scm>
+
 	<modules>
 		<module>feign-generator-core</module>
 		<module>feign-generator-plugin</module>
@@ -30,18 +52,20 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
-		
+
 		<!-- 统一版本 -->
 		<feign-generator.version>0.1</feign-generator.version>
 
 		<!-- 打包时是否执行测试代码 -->
 		<maven.test.skip>true</maven.test.skip>
 
-		<mybatis-plus.version>3.1.1</mybatis-plus.version>
-		<mybatis-spring-boot-starter.version>2.1.3</mybatis-spring-boot-starter.version>
+		<mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+		<mybatis-spring-boot-starter.version>2.3.0</mybatis-spring-boot-starter.version>
 		<mysql-connector-java.version>8.0.22</mysql-connector-java.version>
 		<druid.vsersion>1.2.16</druid.vsersion>
 		<alibaba.fastjson.version>1.2.67</alibaba.fastjson.version>
+
+		<spring-boot.version>2.7.9</spring-boot.version>
 
 	</properties>
 
@@ -50,7 +74,7 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>2.4.0</version>
+				<version>${spring-boot.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -71,11 +95,40 @@
 
 		<pluginManagement>
 			<plugins>
-				<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
 				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>2.4.0</version>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.0.0-M9</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.12.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>3.5.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.8.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.2.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.4.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -83,13 +136,44 @@
 					<version>3.10.1</version>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-plugin-plugin</artifactId>
-					<version>3.8.1</version>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring-boot.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.factories</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<repositories>
 		<repository>
